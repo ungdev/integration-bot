@@ -2,7 +2,7 @@ import os
 import requests
 
 def login() -> str:
-  api_url:str = "https://integration.utt.fr/api/auth/login"
+  api_url:str = os.getenv("API_URL") + "/auth/login"
   payload:dict = {"email": os.getenv('BOT_WEBSITE_EMAIL'), "password": os.getenv('BOT_WEBSITE_PASSWORD')}
   response = requests.post(api_url, json=payload, verify=False)
   if response.status_code == 200:
