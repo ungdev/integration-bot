@@ -1,10 +1,11 @@
+import os
 import requests
 
 def get_teams_with_factions(token: str) -> list:
-    url = "https://integration.utt.fr/api/team/admin/teamswithfactions"
+    url = os.getenv("API_URL") + "/team/admin/teamswithfactions"
     headers = {"Authorization": f"Bearer {token}"}
     print(f"[FETCH] Fetching teams with factions...")
-    response = requests.get(url, headers=headers, verify=False)
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json().get('data', [])
         print(f"[FETCH] Retrieved {len(data)} teams.")

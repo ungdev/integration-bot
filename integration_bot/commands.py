@@ -4,8 +4,10 @@ import discord
 
 from integration_bot.utils.login import login
 from integration_bot.utils.teams import get_teams_with_factions
+from integration_bot.utils.users import get_teams_with_users
 
 from services.teams import setup_discord_structure
+from services.users import assign_roles_to_member
 from services.reset import reset_discord_structure
 
 class CommandsCog(commands.Cog):
@@ -50,6 +52,21 @@ class CommandsCog(commands.Cog):
         await interaction.followup.send(f"✅ Teams sync successful! {len(teams)} teams processed.")
     except Exception as e:
         await interaction.followup.send(f"❌ Error during sync: {str(e)}")
+
+  @commands.is_owner()
+  @app_commands.command(name="usersync", description="Synchronise les utilisateurs et leurs rôles")
+  async def usersync(self, interaction: discord.Interaction) -> None:
+    await interaction.response.defer(thinking=True)
+    guild = interaction.guild
+
+    try:
+      token = login()
+      teams = get_teams_with_users(token)
+      for member in guild.members:
+        await assign_roles_to_member(member, teams)
+      await interaction.followup.send("✅ User sync completed successfully.")
+    except Exception as e:
+      await interaction.followup.send(f"❌ Error during user sync: {str(e)}")
 
 
   @commands.is_owner()
