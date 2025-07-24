@@ -15,7 +15,7 @@ class CommandsCog(commands.Cog):
     self.bot = bot
 
   @commands.is_owner()
-  @commands.command(name='sync')
+  @commands.command(name='commandsync')
   async def sync_commands(self, ctx: commands.Context) -> None:
     try: 
       await self.bot.tree.sync()
@@ -33,7 +33,7 @@ class CommandsCog(commands.Cog):
       await interaction.response.send_message(f'Login successful! Token: {token}')
     except Exception as e:
       await interaction.response.send_message(f'Login failed: {e}')
- 
+
   @commands.is_owner()
   @app_commands.command(name='test')
   async def test_command(self, interaction: discord.Interaction):
@@ -68,6 +68,18 @@ class CommandsCog(commands.Cog):
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync: {str(e)}")
 
+  @app_commands.command(name='usersync', description="Synchronise l'utilisateur qui a exécuté la commande")
+  async def usersync_self(self, interaction: discord.Interaction) -> None:
+    await interaction.response.defer(thinking=True)
+    guild = interaction.guild
+
+    try:
+      token = login()
+      teams = get_teams_with_users(token)
+      await assign_roles_to_member(interaction.user, teams)
+      await interaction.followup.send("✅ User sync for yourself completed successfully.")
+    except Exception as e:
+      await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}")
 
   @commands.is_owner()
   @app_commands.command(name='cleanupteams', description="Nettoie les rôles, salons et retire le rôle 'Nouveau'")
