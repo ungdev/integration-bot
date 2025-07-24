@@ -8,6 +8,7 @@
 # Python venv
 .venv/
 venv/
+pyvenv.cfg
 
 # Python and Ruff cache
 __pycache__/
@@ -22,3 +23,8 @@ logs/
 # Data files
 /data/*
 !/data/*.example.*
+
+# Data files
+Include/
+Lib/
+Scripts/
