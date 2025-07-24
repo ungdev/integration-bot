@@ -71,7 +71,6 @@ class CommandsCog(commands.Cog):
   @app_commands.command(name='usersync', description="Synchronise l'utilisateur qui a exécuté la commande")
   async def usersync_self(self, interaction: discord.Interaction) -> None:
     await interaction.response.defer(thinking=True)
-    guild = interaction.guild
 
     try:
       token = login()
