@@ -3,8 +3,10 @@ import discord
 
 async def reset_discord_structure(guild, teams):
 
-    # 1. Retirer le rôle "Nouveau"
+    # 1. Retirer le rôle "Nouveau" et "Chef d'équipe"
     nouveau_role = discord.utils.get(guild.roles, name="Nouveau")
+    CE_role = discord.utils.get(guild.roles, name="Chef d'équipe")
+
     if nouveau_role:
         print(f"[CLEANUP] Removing 'Nouveau' role from members...")
         for member in guild.members:
@@ -13,6 +15,15 @@ async def reset_discord_structure(guild, teams):
                 print(f"[CLEANUP] Removed 'Nouveau' from {member.display_name}")
     else:
         print("[CLEANUP] Role 'Nouveau' not found.")
+
+    if CE_role:
+        print(f"[CLEANUP] Removing 'Nouveau' role from members...")
+        for member in guild.members:
+            if CE_role in member.roles:
+                await member.remove_roles(CE_role)
+                print(f"[CLEANUP] Removed 'Chef d'équipe' from {member.display_name}")
+    else:
+        print("[CLEANUP] Role 'Chef d'équipe' not found.")
 
     # Supprimer les rôles et salons liés aux équipes/factions
     faction_names = set()
