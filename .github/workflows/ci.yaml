@@ -34,5 +34,5 @@ jobs:
                   context: .
                   push: true
                   tags: |
-                      ${{ secrets.REGISTRY_URL }}/integration/integration-bot:latest,${{ secrets.REGISTRY_URL }}/integration/integration-bot:${{ github.sha }},${{ secrets.HARBOR_URL }}/integration/integration-bot:${{ github.run_number }}
+                      ${{ secrets.REGISTRY_URL }}/integration/integration-bot:latest,${{ secrets.REGISTRY_URL }}/integration/integration-bot:${{ github.sha }},${{ secrets.REGISTRY_URL }}/integration/integration-bot:${{ github.run_number }}
                   platforms: linux/amd64
