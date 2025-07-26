@@ -28,8 +28,6 @@ jobs:
           push: false
           tags: integration-bot-test
           platforms: linux/amd64
-          cache-from: type=registry,ref=${{ secrets.REGISTRY_URL }}/integration/integration-bot:cache
-          cache-to: type=registry,ref=${{ secrets.REGISTRY_URL }}/integration/integration-bot:cache,mode=max
 
   deploy:
     if: ${{ github.event_name != 'pull_request' }}
