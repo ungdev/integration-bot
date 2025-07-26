@@ -22,3 +22,6 @@ logs/
 # Data files
 /data/*
 !/data/*.example.*
+
+# Deployment files
+docker-compose.yml
