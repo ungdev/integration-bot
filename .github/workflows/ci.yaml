@@ -32,7 +32,7 @@ jobs:
           cache-to: type=registry,ref=${{ secrets.REGISTRY_URL }}/integration/integration-bot:cache,mode=max
 
   deploy:
-    if: ${{ github.event_name !== 'pull_request' }}
+    if: ${{ github.event_name != 'pull_request' }}
     needs: build
     runs-on: [self-hosted, Linux, X64]
     steps:
