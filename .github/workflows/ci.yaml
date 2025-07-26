@@ -21,9 +21,9 @@ jobs:
           -   name: Login to SIA Registry
               uses: docker/login-action@v3
               with:
-                  registry: ${{ secrets.HARBOR_URL }}
-                  username: ${{ secrets.HARBOR_USERNAME }}
-                  password: ${{ secrets.HARBOR_TOKEN }}
+                  registry: ${{ secrets.REGISTRY_URL }}
+                  username: ${{ secrets.REGISTRY_USERNAME }}
+                  password: ${{ secrets.REGISTRY_TOKEN }}
 
           -   name: Checkout code
               uses: actions/checkout@v4
