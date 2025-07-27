@@ -1,5 +1,5 @@
 import discord
-from utils import slugify
+from integration_bot.utils.slugify import slugify
 
 async def assign_roles_to_member(member: discord.Member, teams: list):
     discord_id = str(member.id)

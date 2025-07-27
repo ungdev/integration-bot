@@ -1,6 +1,6 @@
 
 import discord
-from utils import slugify
+from integration_bot.utils.slugify import slugify
 
 
 async def setup_discord_structure(guild, teams):
