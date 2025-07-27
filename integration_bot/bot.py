@@ -1,7 +1,8 @@
-import discord
+import discord 
 from discord.ext import commands
 
 from integration_bot.commands import CommandsCog
+from integration_bot.events import EventsCog
 
 class Bot(commands.Bot):
   def __init__(self) -> None:
@@ -12,6 +13,7 @@ class Bot(commands.Bot):
 
   async def setup_hook(self) -> None:
     await self.add_cog(CommandsCog(self))
+    await self.add_cog(EventsCog(self))
 
   async def on_ready(self) -> None:
     print(f'Logged in as {self.user} (ID: {self.user.id})')

@@ -8,6 +8,7 @@
 # Python venv
 .venv/
 venv/
+pyvenv.cfg
 
 # Python and Ruff cache
 __pycache__/
@@ -23,5 +24,12 @@ logs/
 /data/*
 !/data/*.example.*
 
+
+# Data files
+Include/
+Lib/
+Scripts/
+
 # Deployment files
 docker-compose.yml
+
