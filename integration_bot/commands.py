@@ -53,7 +53,7 @@ class CommandsCog(commands.Cog):
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync: {str(e)}")
 
-  @app_commands.command(name='usersync', description="Synchronise l'utilisateur qui a exécuté la commande")
+  @app_commands.command(name='selfsync', description="Synchronise l'utilisateur qui a exécuté la commande")
   async def usersync_self(self, interaction: discord.Interaction) -> None:
     await interaction.response.defer(thinking=True)
 
