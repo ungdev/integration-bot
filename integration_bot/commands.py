@@ -6,9 +6,9 @@ from integration_bot.utils.login import login
 from integration_bot.utils.teams import get_teams_with_factions
 from integration_bot.utils.users import get_teams_with_users
 
-from services.teams import setup_discord_structure
-from services.users import assign_roles_to_member
-from services.reset import reset_discord_structure
+from integration_bot.services.teams import setup_discord_structure
+from integration_bot.services.users import assign_roles_to_member
+from integration_bot.services.reset import reset_discord_structure
 
 class CommandsCog(commands.Cog):
   def __init__(self, bot: commands.Bot) -> None:
@@ -24,21 +24,6 @@ class CommandsCog(commands.Cog):
       await ctx.send('Commands synced successfully.')
     except app_commands.CommandSyncFailure as e:
       await ctx.send(f'Failed to sync commands: {e}') 
-
-  @commands.is_owner()
-  @app_commands.command(name='login')
-  async def login_command(self, interaction: discord.Interaction) -> None:
-    try:
-      token = login()
-      await interaction.response.send_message(f'Login successful! Token: {token}')
-    except Exception as e:
-      await interaction.response.send_message(f'Login failed: {e}')
-
-  @commands.is_owner()
-  @app_commands.command(name='test')
-  async def test_command(self, interaction: discord.Interaction):
-    embed = Embed(title="Test OK", description="La commande slash fonctionne parfaitement connard.", color=0x00ff00)
-    await interaction.response.send_message(embed=embed)
 
   @commands.is_owner()
   @app_commands.command(name='teamsync', description="Synchronise les équipes et factions depuis l'API")
