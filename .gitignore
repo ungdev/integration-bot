@@ -24,7 +24,12 @@ logs/
 /data/*
 !/data/*.example.*
 
+
 # Data files
 Include/
 Lib/
 Scripts/
+
+# Deployment files
+docker-compose.yml
+
