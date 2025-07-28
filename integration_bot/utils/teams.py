@@ -5,7 +5,7 @@ def get_teams_with_factions(token: str) -> list:
     url = os.getenv("API_URL") + "/team/admin/teamswithfactions"
     headers = {"Authorization": f"Bearer {token}"}
     print(f"[FETCH] Fetching teams with factions...")
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, verify=False)
     if response.status_code == 200:
         data = response.json().get('data', [])
         print(f"[FETCH] Retrieved {len(data)} teams.")
