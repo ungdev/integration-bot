@@ -14,7 +14,6 @@ class CommandsCog(commands.Cog):
   def __init__(self, bot: commands.Bot) -> None:
     self.bot = bot
 
-  @commands.is_owner()
   @commands.command(name='commandsync')
   async def sync_commands(self, ctx: commands.Context) -> None:
     try: 
@@ -25,7 +24,6 @@ class CommandsCog(commands.Cog):
     except app_commands.CommandSyncFailure as e:
       await ctx.send(f'Failed to sync commands: {e}') 
 
-  @commands.is_owner()
   @app_commands.command(name='teamsync', description="Synchronise les équipes et factions depuis l'API")
   async def teamsync(self, interaction: discord.Interaction) -> None:
     await interaction.response.defer(thinking=True)
@@ -38,7 +36,6 @@ class CommandsCog(commands.Cog):
     except Exception as e:
         await interaction.followup.send(f"❌ Error during sync: {str(e)}")
 
-  @commands.is_owner()
   @app_commands.command(name="usersync", description="Synchronise les utilisateurs et leurs rôles")
   async def usersync(self, interaction: discord.Interaction) -> None:
     await interaction.response.defer(thinking=True)
@@ -65,7 +62,6 @@ class CommandsCog(commands.Cog):
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}")
 
-  @commands.is_owner()
   @app_commands.command(name='cleanupteams', description="Nettoie les rôles, salons et retire le rôle 'Nouveau'")
   async def cleanupteams(self, interaction: discord.Interaction) -> None:
     await interaction.response.defer(thinking=True)
