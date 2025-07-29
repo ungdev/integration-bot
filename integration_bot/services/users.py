@@ -11,7 +11,6 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
 
     for t in teams:
         for user in t["users"]:
-            logging.warning(f"[DISCORD] User recherché : {user}")
             if user["discordId"] == discord_id:
                 user_found = user
                 team = t
@@ -32,10 +31,12 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
     logging.warning(f'[DISCORD] : Team de l\'user : {team}')
     team_name = team.get("name", "No name")
     faction_name = team.get("faction", "No faction")
-    logging.warning(f'[DISCORD] Team retrouvée avant le slugify : {team_name}')
-    logging.warning(f'[DISCORD] Faction retrouvée avant le slugify : {faction_name}')
-    team_role_name = slugify(f"{team_name} - {faction_name}")
-    faction_role_name = slugify(faction_name)
+
+    team_role_name = f"{team_name} - {faction_name}"
+    faction_role_name = faction_name
+
+    logging.warning(f'[DISCORD] Team retrouvée après le slugify : {team_role_name}')
+    logging.warning(f'[DISCORD] Faction retrouvée après le slugify : {faction_role_name}')
 
     team_role = discord.utils.get(guild.roles, name=team_role_name)
     faction_role = discord.utils.get(guild.roles, name=faction_role_name)
@@ -43,12 +44,12 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
     if team_role:
         roles_to_assign.append(team_role)
     else:
-        print(f"[DISCORD] Rôle d'équipe introuvable : {team_role_name}")
+        logging.warning(f"[DISCORD] Rôle d'équipe introuvable : {team_role_name}")
 
     if faction_role:
         roles_to_assign.append(faction_role)
     else:
-        print(f"[DISCORD] Rôle de faction introuvable : {faction_role_name}")
+        logging.warning(f"[DISCORD] Rôle de faction introuvable : {faction_role_name}")
 
     permission = user_found.get("permission")
     if permission == "Nouveau":
@@ -62,9 +63,9 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
 
     try:
         await member.add_roles(*roles_to_assign)
-        print(f"[DISCORD] Rôles attribués à {member.display_name}: {[r.name for r in roles_to_assign]}")
+        logging.warning(f"[DISCORD] Rôles attribués à {member.display_name}: {[r.name for r in roles_to_assign]}")
     except Exception as e:
-        print(f"[DISCORD] Erreur lors de l'ajout des rôles : {e}")
+        logging.warning(f"[DISCORD] Erreur lors de l'ajout des rôles : {e}")
 
     # 🔤 Renommer le membre avec prénom + nom
     first_name = user_found.get("firstName", "").strip()
@@ -74,6 +75,6 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
     if new_nickname and member.nick != new_nickname:
         try:
             await member.edit(nick=new_nickname)
-            print(f"[DISCORD] Pseudo mis à jour : {new_nickname}")
+            logging.warning(f"[DISCORD] Pseudo mis à jour : {new_nickname}")
         except Exception as e:
-            print(f"[DISCORD] Impossible de modifier le pseudo : {e}")
+            logging.warning(f"[DISCORD] Impossible de modifier le pseudo : {e}")
