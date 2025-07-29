@@ -14,6 +14,6 @@ class EventsCog(commands.Cog):
         try:
             token = login()
             teams = get_teams_with_users(token)
-            await assign_roles_to_member(member, teams)
+            await assign_roles_to_member(member, teams, True)
         except Exception as e:
             print(f"[EVENT] Erreur lors de l'attribution des rôles : {e}")

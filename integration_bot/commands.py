@@ -45,7 +45,7 @@ class CommandsCog(commands.Cog):
       token = login()
       teams = get_teams_with_users(token)
       for member in guild.members:
-        await assign_roles_to_member(member, teams)
+        await assign_roles_to_member(member, teams, False)
       await interaction.followup.send("✅ User sync completed successfully.")
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync: {str(e)}")
@@ -57,7 +57,7 @@ class CommandsCog(commands.Cog):
     try:
       token = login()
       teams = get_teams_with_users(token)
-      await assign_roles_to_member(interaction.user, teams)
+      await assign_roles_to_member(interaction.user, teams, True)
       await interaction.followup.send("✅ User sync for yourself completed successfully.")
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}")

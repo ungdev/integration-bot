@@ -1,7 +1,7 @@
 import discord
 from integration_bot.utils.slugify import slugify
 
-async def assign_roles_to_member(member: discord.Member, teams: list):
+async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool):
     discord_id = str(member.id)
     guild = member.guild
 
@@ -17,9 +17,9 @@ async def assign_roles_to_member(member: discord.Member, teams: list):
         if user_found:
             break
 
-    if not user_found:
+    if not user_found and mp:
         try:
-            await member.send("Bienvenue ! Pour accéder aux rôles, synchronise ton compte ici : https://integration.utt.fr/sync")
+            await member.send("Bienvenue ! Pour accéder aux rôles, synchronise ton compte ici : https://integration.utt.fr/Profil")
         except Exception as e:
             print(f"[DISCORD] Erreur d'envoi du message privé : {e}")
         return
@@ -27,8 +27,9 @@ async def assign_roles_to_member(member: discord.Member, teams: list):
     roles_to_assign = []
 
     #Construction des noms de rôles selon la logique de setup_discord_structure
-    team_name = team.get("name", "No name")
-    faction_name = team.get("faction", "No faction")
+    print(team, t)
+    team_name = t.get("name", "No name")
+    faction_name = t.get("faction", "No faction")
     team_role_name = slugify(f"{team_name} - {faction_name}")
     faction_role_name = slugify(faction_name)
 
