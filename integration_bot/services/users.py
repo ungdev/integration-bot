@@ -1,4 +1,5 @@
 import discord
+import logging
 from integration_bot.utils.slugify import slugify
 
 async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool):
@@ -10,7 +11,7 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
 
     for t in teams:
         for user in t["users"]:
-            print(f"[DISCORD] User recherché : {user}")
+            logging.warning(f"[DISCORD] User recherché : {user}")
             if user["discordId"] == discord_id:
                 user_found = user
                 team = t
@@ -28,11 +29,11 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
     roles_to_assign = []
 
     #Construction des noms de rôles selon la logique de setup_discord_structure
-    print(f'[DISCORD] : Team de l\'user : {team}')
+    logging.warning(f'[DISCORD] : Team de l\'user : {team}')
     team_name = team.get("name", "No name")
     faction_name = team.get("faction", "No faction")
-    print(f'[DISCORD] Team retrouvée avant le slugify : {team_name}')
-    print(f'[DISCORD] Faction retrouvée avant le slugify : {faction_name}')
+    logging.warning(f'[DISCORD] Team retrouvée avant le slugify : {team_name}')
+    logging.warning(f'[DISCORD] Faction retrouvée avant le slugify : {faction_name}')
     team_role_name = slugify(f"{team_name} - {faction_name}")
     faction_role_name = slugify(faction_name)
 
