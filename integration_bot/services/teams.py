@@ -20,18 +20,14 @@ async def setup_discord_structure(guild, teams):
             continue
 
         # Créer le rôle de faction une seule fois
-        if faction_name not in faction_roles:
-            faction_role = existing_roles.get(faction_name)
-            if not faction_role:
-                print(f"[DISCORD] Creating faction role: {faction_name}")
-                faction_role = await guild.create_role(name=faction_name)
-            faction_roles[faction_name] = faction_role
-        else:
-            faction_role = faction_roles[faction_name]
+        faction_role = existing_roles.get(faction_name)
+        if not faction_role:
+            print(f"[DISCORD] Creating faction role: {faction_name}")
+            faction_role = await guild.create_role(name=faction_name)
 
-        # Créer le rôle d’équipe
+        # Créer le rôle d’équipe une seule fois
         role_name = f"{team_name} - {faction_name}"
-        team_role = existing_roles.get("role_name")
+        team_role = existing_roles.get(role_name)
         if not team_role:
             print(f"[DISCORD] Creating team role: {role_name}")
             team_role = await guild.create_role(name=role_name)
