@@ -15,7 +15,7 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
                 user_found = user
                 team = t
                 break
-        if user_found and team:
+        if user_found:
             break
 
     if not user_found and mp:
@@ -24,6 +24,11 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
         except Exception as e:
             print(f"[DISCORD] Erreur d'envoi du message privé : {e}")
         return
+    
+    # Skip si aucun utilisateur ou aucune équipe n'a été trouvée
+    if not user_found or not team:
+        logging.warning(f"[DISCORD] Aucun utilisateur ou équipe trouvée pour {member.display_name}")
+    return
 
     roles_to_assign = []
 
