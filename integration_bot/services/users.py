@@ -10,6 +10,7 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
     team = None
 
     for t in teams:
+        logging.warning("[RECHERCHE] Team scannée : {t}")
         for user in t["users"]:
             if user["discordId"] == discord_id:
                 user_found = user
@@ -22,13 +23,13 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
         try:
             await member.send("Bienvenue ! Pour accéder aux rôles, synchronise ton compte ici : https://integration.utt.fr/Profil")
         except Exception as e:
-            print(f"[DISCORD] Erreur d'envoi du message privé : {e}")
+            logging.warning(f"[DISCORD] Erreur d'envoi du message privé : {e}")
         return
     
     # Skip si aucun utilisateur ou aucune équipe n'a été trouvée
     if not user_found or not team:
         logging.warning(f"[DISCORD] Aucun utilisateur ou équipe trouvée pour {member.display_name}")
-    return
+        return
 
     roles_to_assign = []
 
