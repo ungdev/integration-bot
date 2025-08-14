@@ -1,3 +1,4 @@
+import logging
 import discord
 
 
@@ -8,22 +9,22 @@ async def reset_discord_structure(guild, teams):
     CE_role = discord.utils.get(guild.roles, name="Chef d'équipe")
 
     if nouveau_role:
-        print(f"[CLEANUP] Removing 'Nouveau' role from members...")
+        logging.warning(f"[CLEANUP] Removing 'Nouveau' role from members...")
         for member in guild.members:
             if nouveau_role in member.roles:
                 await member.remove_roles(nouveau_role)
-                print(f"[CLEANUP] Removed 'Nouveau' from {member.display_name}")
+                logging.warning(f"[CLEANUP] Removed 'Nouveau' from {member.display_name}")
     else:
-        print("[CLEANUP] Role 'Nouveau' not found.")
+        logging.warning("[CLEANUP] Role 'Nouveau' not found.")
 
     if CE_role:
-        print(f"[CLEANUP] Removing 'Nouveau' role from members...")
+        logging.warning(f"[CLEANUP] Removing 'CE' role from members...")
         for member in guild.members:
             if CE_role in member.roles:
                 await member.remove_roles(CE_role)
-                print(f"[CLEANUP] Removed 'Chef d'équipe' from {member.display_name}")
+                logging.warning(f"[CLEANUP] Removed 'Chef d'équipe' from {member.display_name}")
     else:
-        print("[CLEANUP] Role 'Chef d'équipe' not found.")
+        logging.warning("[CLEANUP] Role 'Chef d'équipe' not found.")
 
     # Supprimer les rôles et salons liés aux équipes/factions
     faction_names = set()
@@ -36,10 +37,10 @@ async def reset_discord_structure(guild, teams):
 
         # Ignorer les équipes sans nom ou sans faction
         if team_name == "No name":
-            print(f"[SKIP] Skipping unnamed team with faction '{faction_name}'.")
+            logging.warning(f"[SKIP] Skipping unnamed team with faction '{faction_name}'.")
             continue
         if faction_name == "No faction":
-            print(f"[SKIP] Skipping team '{team_name}' with no faction.")
+            logging.warning(f"[SKIP] Skipping team '{team_name}' with no faction.")
             continue
 
         if team_name and faction_name:
@@ -50,21 +51,21 @@ async def reset_discord_structure(guild, teams):
 
 
     # Supprimer les rôles d’équipe
-    print("[CLEANUP] Deleting team roles...")
+    logging.warning("[CLEANUP] Deleting team roles...")
     for role in guild.roles:
         if any(team_name in role.name for team_name in team_names):
             await role.delete()
             print(f"[CLEANUP] Deleted team role: {role.name}")
 
     #Supprimer les rôles de faction
-    print("[CLEANUP] Deleting faction roles...")
+    logging.warning("[CLEANUP] Deleting faction roles...")
     for role in guild.roles:
         if role.name in faction_names:
             await role.delete()
             print(f"[CLEANUP] Deleted faction role: {role.name}")
 
     # Supprimer les salons et catégories
-    print("[CLEANUP] Deleting faction categories and team channels...")
+    logging.warning("[CLEANUP] Deleting faction categories and team channels...")
     for category in guild.categories:
         if category.name in faction_names:
             print(f"[CLEANUP] Deleting category: {category.name}")

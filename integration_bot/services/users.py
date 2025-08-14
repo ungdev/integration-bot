@@ -15,7 +15,7 @@ async def assign_roles_to_member(member: discord.Member, teams: list, mp : bool)
                 user_found = user
                 team = t
                 break
-        if user_found:
+        if user_found and team:
             break
 
     if not user_found and mp:
