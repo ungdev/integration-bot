@@ -1,6 +1,9 @@
 import os
 import requests
 
+# Disable SSL warnings when verify=False is used
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 def get_teams_with_factions(token: str) -> list:
     url = os.getenv("API_URL") + "/team/admin/teamswithfactions"
     headers = {"Authorization": f"Bearer {token}"}

@@ -58,9 +58,11 @@ class CommandsCog(commands.Cog):
       token = login()
       teams = get_teams_with_users(token)
       await assign_roles_to_member(interaction.user, teams, True)
-      await interaction.followup.send("✅ User sync for yourself completed successfully.")
+      await interaction.followup.send("✅ User sync for yourself completed successfully.", ephemeral = True)
+    except AttributeError:
+      await interaction.followup.send(f"❌ Error during user sync: You must execute this command in a server channel.", ephemeral = True)
     except Exception as e:
-      await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}")
+      await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}", ephemeral = True)
 
   @app_commands.command(name='cleanupteams', description="Nettoie les rôles, salons et retire le rôle 'Nouveau'")
   async def cleanupteams(self, interaction: discord.Interaction) -> None:
