@@ -32,7 +32,6 @@ jobs:
 
   deploy:
     if: ${{ github.event_name != 'pull_request' }}
-    needs: build
     runs-on: [self-hosted, Linux, X64]
     steps:
       - name: Set up QEMU
