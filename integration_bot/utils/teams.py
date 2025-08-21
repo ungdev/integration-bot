@@ -1,4 +1,5 @@
 import os
+import urllib3
 import requests
 
 # Disable SSL warnings when verify=False is used
