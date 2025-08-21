@@ -1,6 +1,7 @@
 import os
 import logging
 import requests
+import urllib3
 
 # Disable SSL warnings when verify=False is used
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
