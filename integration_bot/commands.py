@@ -60,7 +60,7 @@ class CommandsCog(commands.Cog):
       await assign_roles_to_member(interaction.user, teams, True)
       await interaction.followup.send("✅ User sync for yourself completed successfully.")
     except AttributeError:
-      await interaction.followup.send(f"❌ Error during user sync: You must execute this command in a server channel.")
+      await interaction.followup.send(f"❌ Erreur durant la synchronisation: Vous devez envoyer ce message sur un serveur discord")
     except Exception as e:
       await interaction.followup.send(f"❌ Error during user sync for yourself: {str(e)}")
 
